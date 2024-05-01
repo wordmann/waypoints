@@ -125,7 +125,6 @@ suspend fun createWaypointPublic(
     return NameTaken
   }
 
-  player.sendMessage("Creating it public baby")
   val waypoint = plugin.api.publicWaypoints.createWaypoint(name, location, player.uniqueId)
   plugin.translations.WAYPOINT_SET_SUCCESS_PUBLIC.send(player)
 

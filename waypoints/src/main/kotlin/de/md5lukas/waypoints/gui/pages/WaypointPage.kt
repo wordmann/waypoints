@@ -63,8 +63,6 @@ class WaypointPage(wpGUI: WaypointsGUI, private val waypoint: Waypoint) :
 
   private suspend fun updatePage(update: Boolean = true) {
 
-    wpGUI.viewer.sendMessage(waypoint.owner.toString())
-
     applyPattern(
         waypointPattern,
         0,

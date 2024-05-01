@@ -28,14 +28,30 @@ internal open class WaypointHolderImpl(
 ) : WaypointHolder {
 
   override suspend fun getFolders(): List<Folder> =
-      withContext(dm.asyncDispatcher) {
+
+    withContext(dm.asyncDispatcher) {
+      if (type == Type.PUBLIC) {
+
+        withContext(dm.asyncDispatcher) {
+          dm.connection.select(
+            "SELECT * FROM folders WHERE type = ?;",
+            type.name) {
+            FolderImpl(dm, this)
+          }
+        }
+
+      } else {
+
         dm.connection.select(
-            "SELECT * FROM folders WHERE type = ? AND owner IS ?;",
-            type.name,
-            owner?.toString()) {
-              FolderImpl(dm, this)
-            }
+          "SELECT * FROM folders WHERE type = ? AND owner IS ?;",
+          type.name,
+          owner?.toString()
+        ) {
+          FolderImpl(dm, this)
+        }
       }
+
+    }
 
   override suspend fun getWaypoints(): List<Waypoint> =
       withContext(dm.asyncDispatcher) {
@@ -109,12 +125,25 @@ internal open class WaypointHolderImpl(
 
   override suspend fun getFoldersAmount(): Int =
       withContext(dm.asyncDispatcher) {
-        dm.connection.selectFirst(
+
+        if (type == Type.PUBLIC) {
+
+          dm.connection.selectFirst(
+            "SELECT COUNT(*) FROM folders WHERE type = ?;",
+            type.name) {
+            getInt(1)
+          }!!
+
+        }else{
+
+          dm.connection.selectFirst(
             "SELECT COUNT(*) FROM folders WHERE type = ? AND owner IS ?;",
             type.name,
             owner?.toString()) {
-              getInt(1)
-            }!!
+            getInt(1)
+          }!!
+
+        }
       }
 
   override suspend fun getWaypointsVisibleForPlayer(permissible: Permissible): Int =
