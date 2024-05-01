@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-base/waypoints.api-base.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-base/waypoints.api-base.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-base/waypoints.api-base.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-base/waypoints.api-base.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-sqlite/waypoints.api-sqlite.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-sqlite/waypoints.api-sqlite.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-sqlite/waypoints.api-sqlite.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-sqlite/waypoints.api-sqlite.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-tests/waypoints.api-tests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-tests/waypoints.api-tests.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-tests/waypoints.api-tests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-tests/waypoints.api-tests.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pointers/waypoints.pointers.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pointers/waypoints.pointers.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pointers/waypoints.pointers.test.iml" filepath="$PROJECT_DIR$/.idea/modules/pointers/waypoints.pointers.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signgui/waypoints.signgui.main.iml" filepath="$PROJECT_DIR$/.idea/modules/signgui/waypoints.signgui.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signgui/waypoints.signgui.test.iml" filepath="$PROJECT_DIR$/.idea/modules/signgui/waypoints.signgui.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utils/waypoints.utils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utils/waypoints.utils.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utils/waypoints.utils.test.iml" filepath="$PROJECT_DIR$/.idea/modules/utils/waypoints.utils.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/waypoints-api/waypoints.waypoints-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/waypoints-api/waypoints.waypoints-api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/waypoints-api/waypoints.waypoints-api.test.iml" filepath="$PROJECT_DIR$/.idea/modules/waypoints-api/waypoints.waypoints-api.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/waypoints/waypoints.waypoints.main.iml" filepath="$PROJECT_DIR$/.idea/modules/waypoints/waypoints.waypoints.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/waypoints/waypoints.waypoints.test.iml" filepath="$PROJECT_DIR$/.idea/modules/waypoints/waypoints.waypoints.test.iml" />
+    </modules>
+  </component>
+</project>

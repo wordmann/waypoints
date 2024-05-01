@@ -30,39 +30,81 @@ internal open class WaypointHolderImpl(
   override suspend fun getFolders(): List<Folder> =
       withContext(dm.asyncDispatcher) {
         dm.connection.select(
-            "SELECT * FROM folders WHERE type = ? AND owner IS ?;", type.name, owner?.toString()) {
+            "SELECT * FROM folders WHERE type = ? AND owner IS ?;",
+            type.name,
+            owner?.toString()) {
               FolderImpl(dm, this)
             }
       }
 
   override suspend fun getWaypoints(): List<Waypoint> =
       withContext(dm.asyncDispatcher) {
-        dm.connection.select(
+
+        if (type == Type.PUBLIC) {
+
+          dm.connection.select(
+            "SELECT * FROM waypoints WHERE type = ? AND folder IS NULL;",
+            type.name) {
+            WaypointImpl(dm, this)
+          }
+
+        } else {
+
+          dm.connection.select(
             "SELECT * FROM waypoints WHERE type = ? AND owner IS ? AND folder IS NULL;",
             type.name,
             owner?.toString()) {
-              WaypointImpl(dm, this)
-            }
+            WaypointImpl(dm, this)
+          }
+
+        }
       }
 
   override suspend fun getAllWaypoints(): List<Waypoint> =
       withContext(dm.asyncDispatcher) {
-        dm.connection.select(
+
+        if (type == Type.PUBLIC) {
+
+          dm.connection.select(
+            "SELECT * FROM waypoints WHERE type = ? AND folder IS NULL;",
+            type.name) {
+            WaypointImpl(dm, this)
+          }
+
+        } else {
+
+          dm.connection.select(
             "SELECT * FROM waypoints WHERE type = ? AND owner IS ?;",
             type.name,
             owner?.toString()) {
-              WaypointImpl(dm, this)
-            }
+            WaypointImpl(dm, this)
+          }
+
+        }
       }
 
   override suspend fun getWaypointsAmount(): Int =
       withContext(dm.asyncDispatcher) {
-        dm.connection.selectFirst(
+
+        if (type == Type.PUBLIC) {
+
+          dm.connection.selectFirst(
+            "SELECT COUNT(*) FROM waypoints WHERE type = ?;",
+            type.name) {
+            getInt(1)
+          }!!
+
+        }else{
+
+          dm.connection.selectFirst(
             "SELECT COUNT(*) FROM waypoints WHERE type = ? AND owner IS ?;",
             type.name,
             owner?.toString()) {
-              getInt(1)
-            }!!
+            getInt(1)
+          }!!
+
+        }
+
       }
 
   override suspend fun getFoldersAmount(): Int =
@@ -92,6 +134,10 @@ internal open class WaypointHolderImpl(
     return createWaypointTyped(name, location, type)
   }
 
+  override suspend fun createWaypoint(name: String, location: Location, coolowner: UUID): Waypoint {
+    return createWaypointTyped(name, location, type, coolowner)
+  }
+
   internal suspend fun createWaypointTyped(name: String, location: Location, type: Type): Waypoint =
       withContext(dm.asyncDispatcher) {
         val id = UUID.randomUUID()
@@ -101,6 +147,28 @@ internal open class WaypointHolderImpl(
             OffsetDateTime.now().toString(),
             type.name,
             owner?.toString(),
+            name,
+            location.world!!.name,
+            location.x,
+            location.y,
+            location.z,
+        )
+        dm.connection
+            .selectFirst("SELECT * FROM waypoints WHERE id = ?;", id.toString()) {
+              WaypointImpl(dm, this)
+            }!!
+            .also { WaypointCreateEvent(!dm.testing, it).callEvent() }
+      }
+
+  internal suspend fun createWaypointTyped(name: String, location: Location, type: Type, coolowner: UUID): Waypoint =
+      withContext(dm.asyncDispatcher) {
+        val id = UUID.randomUUID()
+        dm.connection.update(
+            "INSERT INTO waypoints(id, createdAt, type, owner, name, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+            id.toString(),
+            OffsetDateTime.now().toString(),
+            type.name,
+            coolowner.toString(),
             name,
             location.world!!.name,
             location.x,

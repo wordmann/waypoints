@@ -3,6 +3,7 @@ package de.md5lukas.waypoints.api
 import de.md5lukas.waypoints.api.gui.GUIFolder
 import org.bukkit.Location
 import org.bukkit.permissions.Permissible
+import java.util.*
 
 /** The WaypointHolder provides methods and properties to accumulate waypoints and folders */
 interface WaypointHolder : GUIFolder {
@@ -51,6 +52,8 @@ interface WaypointHolder : GUIFolder {
    * @return The newly created waypoint
    */
   @JvmSynthetic suspend fun createWaypoint(name: String, location: Location): Waypoint
+
+  @JvmSynthetic suspend fun createWaypoint(name: String, location: Location, coolowner: UUID): Waypoint
 
   fun createWaypointCF(name: String, location: Location) = future { createWaypoint(name, location) }
 

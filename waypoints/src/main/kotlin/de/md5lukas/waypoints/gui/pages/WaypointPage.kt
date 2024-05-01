@@ -57,11 +57,14 @@ class WaypointPage(wpGUI: WaypointsGUI, private val waypoint: Waypoint) :
       when (waypoint.type) {
         Type.PRIVATE,
         Type.DEATH -> wpGUI.viewerData.id == waypoint.owner
-        Type.PUBLIC -> wpGUI.viewer.hasPermission(WaypointsPermissions.MODIFY_PUBLIC)
+        Type.PUBLIC -> wpGUI.viewer.hasPermission(WaypointsPermissions.MODIFY_PUBLIC) && wpGUI.viewerData.id == waypoint.owner
         Type.PERMISSION -> wpGUI.viewer.hasPermission(WaypointsPermissions.MODIFY_PERMISSION)
       }
 
   private suspend fun updatePage(update: Boolean = true) {
+
+    wpGUI.viewer.sendMessage(waypoint.owner.toString())
+
     applyPattern(
         waypointPattern,
         0,
